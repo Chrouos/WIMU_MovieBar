@@ -35,28 +35,48 @@ class HuggingChatMovie:
     def query(self, _query, _web_search=False):
         
         query_result = self.chatbot.query(_query, web_search=_web_search)
-        print(query_result)
         for source in query_result.web_search_sources:
-            print(source.link)
-            print(source.title)
-            print(source.hostname)
+            print(textwrap.dedent("""
+            Query Information: 
+            - Link: {Link},
+            - Title: {Title},
+            - hostname: {Hostname}
+            －－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－
+            """).format(Link=source.link, Title=source.title, Hostname=source.hostname))
+        
+        print(query_result)
+        
             
-    def change_assistant(self, _assistant_name):
+    def change_assistant(self, _assistant_id):
         try:
-            assistant = self.chatbot.search_assistant(assistant_name=_assistant_name)
-            self.chatbot.new_conversation(assistant=assistant, switch_to=True)
-            print(f"Now you assigned assistant: {assistant}")
+            self.chatbot.new_conversation(assistant=_assistant_id, switch_to = True)
+            # assistant = self.chatbot.search_assistant(assistant_name=_assistant_id)
+            # self.chatbot.new_conversation(assistant=assistant, switch_to=True)
+            # print(f"Now you assigned assistant: {assistant}")
         except Exception as e:
             print(f"[change_assistant] error in: {e}")
+            
+    def output_assistant_list(self, page=0):
+        assistant_list = self.chatbot.get_assistant_list_by_page(page=page)
+        for assistant in assistant_list:
+            print(textwrap.dedent(f"""
+            Assistant ID: {assistant.assistant_id}
+            - Author: {assistant.author}
+            - Name: {assistant.name}
+            - Model Name: {assistant.model_name}
+            －－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－
+            """))
+            
+        return assistant_list
         
     
 if __name__ == "__main__":
     
     hugging_chat_movie = HuggingChatMovie()
-    
-    hugging_chat_movie.change_assistant(_assistant_name="Movie and TV Recommendations")
+    # hugging_chat_movie.output_assistant_list()
+    hugging_chat_movie.change_assistant(_assistant_id="66207bb286188d2c9787a941")
     hugging_chat_movie.query(
-        _query="告訴我 [overlord] 這部動漫在說什麼", 
+        _query="我想知道 2019 年有什麼好看的英雄電影，我希望裡面有蜘蛛人出現", 
         _web_search=True
     )
     
