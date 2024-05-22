@@ -45,6 +45,7 @@ class HuggingChatMovie:
             """).format(Link=source.link, Title=source.title, Hostname=source.hostname))
         
         print(query_result)
+        return query_result
         
             
     def change_assistant(self, _assistant_id):
@@ -67,6 +68,7 @@ class HuggingChatMovie:
             －－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－
             """))
             
+        print(assistant_list)
         return assistant_list
         
     
