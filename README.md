@@ -18,3 +18,7 @@ hugging_chat_movie.query(
     _query="告訴我歌喉讚的主角是誰?", 
 )
 ```
+
+Different Hugging ID
++ For ALL: `664e16817d1eaccf3540c1ff`
++ For Domain: `66519a86045e6245ae5c8eb8`
