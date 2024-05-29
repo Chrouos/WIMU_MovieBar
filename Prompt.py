@@ -1,6 +1,7 @@
 import textwrap
 
 base_prompt_to_select_action = textwrap.dedent("""
+
 你是負責選擇動作的助手，當事人向你提出影視相關的提問，你要針對問題來選取以下的動作。
 當使用者回應時，根據以下三個情境來決定接下來的動作，並且加上相對應的文字敘述：
 
@@ -12,4 +13,5 @@ base_prompt_to_select_action = textwrap.dedent("""
 你只需要輸出選擇動作1~3，如 :
 { 1 : 關鍵字與搜尋網站，以" "與,分隔 }
 [/輸出格式]
+
 """)

@@ -17,10 +17,10 @@ class GPTAssistant():
     def select_action(self, query):
         
         completion = self.client.chat.completions.create(
-            model="gpt-3.5-turbo-0301",
+            model="3.5-turbo-0125",
             messages=[
-                {"role": "system", "content": ""},
-                {"role": "user", "content": base_prompt_to_select_action + query}
+                {"role": "system", "content": base_prompt_to_select_action},
+                {"role": "user", "content": query}
             ]
         )
         
