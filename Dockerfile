@@ -18,4 +18,4 @@ EXPOSE 8150
 CMD ["flask", "run", "--host=0.0.0.0", "--port=8150"]
 
 # docker build -t flask-chat-app .
-# docker run -d -p 8150:8150 --name flask_chat_app -v ${PWD}/data:/app/data flask-chat-app
+# docker run -d -p 8150:8150 --name flask_chat_app -v ${PWD}:/app flask-chat-app
