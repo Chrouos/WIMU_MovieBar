@@ -1,4 +1,4 @@
-﻿import os
+import os
 import shutil
 from dotenv import load_dotenv
 import textwrap
@@ -35,18 +35,18 @@ class HuggingChatMovie:
             cookies = sign.login(cookie_dir_path=self.cookie_path_dir, save_cookies=True)
             self.chatbot = hugchat.ChatBot(cookies=cookies.get_dict()) 
             
-            print("[login] Successed.")
+            # print("[login] Successed.")
         except Exception as e:
             print(f"[login] error in: {e}")
         
     def query(self, _query, _web_search=False):
         
-        query_result = self.chatbot.query(_query, web_search=_web_search)
-        print(textwrap.dedent(f"""
-            - Query:\n {_query}
-            
-            - Response:\n {query_result}
-        """))
+        query_result = self.chatbot.query(_query, web_search=_web_search, retry_count=1)
+        # print(textwrap.dedent(f"""
+        # - Query:\n {_query}
+        
+        # - Response:\n {query_result}
+        # """))
         
         # other_information = ""
         # for source in query_result.web_search_sources:
@@ -60,13 +60,13 @@ class HuggingChatMovie:
             
         #     other_information += current_info
         
-        return query_result
+        return query_result.wait_until_done()
         
             
     def change_assistant(self, _assistant_id):
         try:
             self.chatbot.new_conversation(assistant=_assistant_id, switch_to = True)
-            print(f"Change Assistant to: {_assistant_id}")
+            # print(f"Change Assistant to: {_assistant_id}")
             # assistant = self.chatbot.search_assistant(assistant_name=_assistant_id)
             # self.chatbot.new_conversation(assistant=assistant, switch_to=True)
             # print(f"Now you assigned assistant: {assistant}")
@@ -100,21 +100,21 @@ if __name__ == "__main__":
     print("start to connect the hugging chat API.")
     
     hugging_chat_movie_all = HuggingChatMovie()
-    hugging_chat_movie_all.change_assistant(_assistant_id="664e16817d1eaccf3540c1ff")
+    # hugging_chat_movie_all.change_assistant(_assistant_id="664e16817d1eaccf3540c1ff")
     response_response_all = hugging_chat_movie_all.query(
-        _query="告訴我歌喉讚的主角是誰?", 
+        _query='Tell me about the "overlord" this anime work is talking about.', 
         _web_search=True
     )
     print("response_response_all:\n", response_response_all, "\n")
     # hugging_chat_movie_all.logout()
 
-    # hugging_chat_movie_domain = HuggingChatMovie()
-    # hugging_chat_movie_domain.change_assistant(_assistant_id="66519a86045e6245ae5c8eb8")
-    # response_response_domain = hugging_chat_movie_domain.query(
-    #     _query="告訴我歌喉讚的主角是誰?", 
-    #     _web_search=True
-    # )
-    # print("response_response_domain:\n", response_response_domain)
+    hugging_chat_movie_domain = HuggingChatMovie()
+    hugging_chat_movie_domain.change_assistant(_assistant_id="66519a86045e6245ae5c8eb8")
+    response_response_domain = hugging_chat_movie_domain.query(
+        _query='Tell me about the "overlord" this anime work is talking about.',
+        _web_search=True
+    )
+    print("response_response_domain:\n", response_response_domain)
     # hugging_chat_movie_domain.logout()
     
     
