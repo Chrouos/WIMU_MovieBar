@@ -17,5 +17,5 @@ EXPOSE 8150
 # 啟動 Flask 應用
 CMD ["flask", "run", "--host=0.0.0.0", "--port=8150"]
 
-# docker build -t widm-front-end .
+# docker build -t flask-chat-app .
 # docker run -d -p 8150:8150 --name flask_chat_app -v ${PWD}/data:/app/data flask-chat-app

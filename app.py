@@ -14,9 +14,14 @@ def query_assistant(assistant_id, query):
 def get_the_action_select(query):
     gpt_assistant = GPTAssistant()
     result = gpt_assistant.select_action(query)
-    print(result)
+    print("action selector", result)
     try: return int(result[0]), result
     except ValueError: return 3, result
+    
+def summarization(result):
+    gpt_assistant = GPTAssistant()
+    summary = gpt_assistant.summarization(result)
+    return summary
 
 @app.route('/api/chat_query', methods=['POST'])
 def chat_query():
@@ -38,10 +43,12 @@ def chat_query():
         else:
             response = "抱歉，這是關於電影的助手，請問您需要搜尋什麼和電影相關的問題嗎？"
             
+        response_after_summarization = summarization(response)
+            
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
-    return jsonify({'response': str(response), 'action': result})
+    return jsonify({'response': str(response_after_summarization), 'action': result})
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=8150)
